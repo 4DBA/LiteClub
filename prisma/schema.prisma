@@ -1,0 +1,92 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String   @id @default(cuid())
+  student_id      String   @unique
+  name            String
+  phone           String
+  role            String   @default("USER") // USER, MEMBER, ADMIN
+  hashed_password String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+
+  applications     RecruitApplication[]
+  requestedTickets ClinicTicket[]       @relation("RequesterTickets")
+  assignedTickets  ClinicTicket[]       @relation("TechnicianTickets")
+
+  @@map("user")
+}
+
+model Department {
+  id         String   @id @default(cuid())
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  firstChoiceApplications  RecruitApplication[] @relation("FirstChoiceDepartment")
+  secondChoiceApplications RecruitApplication[] @relation("SecondChoiceDepartment")
+
+  @@map("department")
+}
+
+model RecruitBatch {
+  id         String   @id @default(cuid())
+  name       String
+  is_active  Boolean  @default(true)
+  created_at DateTime @default(now())
+
+  applications RecruitApplication[]
+
+  @@map("recruit_batch")
+}
+
+model RecruitApplication {
+  id               String   @id @default(cuid())
+  batch_id         String
+  user_id          String
+  first_choice_id  String
+  second_choice_id String?
+  status           String   @default("PENDING") // PENDING, INTERVIEWING, ACCEPTED, REJECTED
+  intro_text       String
+  resume_url       String?
+  admin_notes      String?
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  batch         RecruitBatch @relation(fields: [batch_id], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  first_choice  Department   @relation("FirstChoiceDepartment", fields: [first_choice_id], references: [id], onDelete: Restrict)
+  second_choice Department?  @relation("SecondChoiceDepartment", fields: [second_choice_id], references: [id], onDelete: SetNull)
+
+  @@unique([batch_id, user_id])
+  @@index([batch_id])
+  @@index([status])
+  @@map("recruit_application")
+}
+
+model ClinicTicket {
+  id            String   @id @default(cuid())
+  requester_id  String
+  technician_id String?
+  device_info   String
+  issue_desc    String
+  status        String   @default("CREATED") // CREATED, ACCEPTED, COMPLETED, CANCELLED
+  repair_notes  String?
+  rating        Int?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  requester  User  @relation("RequesterTickets", fields: [requester_id], references: [id], onDelete: Cascade)
+  technician User? @relation("TechnicianTickets", fields: [technician_id], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([technician_id])
+  @@index([requester_id])
+  @@map("clinic_ticket")
+}
