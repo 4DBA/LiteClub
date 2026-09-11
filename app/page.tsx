@@ -33,7 +33,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col flex-1">
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-neutral-200 bg-gradient-to-b from-blue-50/70 to-white px-4 py-16 sm:px-6 lg:py-20 dark:border-neutral-800 dark:from-neutral-900 dark:to-neutral-950">
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/70 via-blue-50/20 to-neutral-50 px-4 pt-16 pb-12 sm:px-6 lg:pt-20 lg:pb-14 dark:from-neutral-900 dark:via-neutral-900/60 dark:to-neutral-950">
         <div className="container mx-auto max-w-5xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-100/60 px-3.5 py-1 text-xs font-semibold text-blue-800 dark:border-blue-900 dark:bg-blue-950 dark:text-blue-300 mb-6">
             <Sparkles className="h-3.5 w-3.5" />
@@ -102,53 +102,53 @@ export default async function HomePage() {
       </section>
 
       {/* Live Data Metrics */}
-      <section className="container mx-auto max-w-6xl px-4 -mt-6 sm:px-6">
+      <section className="container mx-auto max-w-6xl px-4 py-8 sm:px-6">
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <Card className="shadow-sm">
-            <CardContent className="p-4 flex items-center justify-between">
+          <Card className="shadow-sm border-neutral-200 dark:border-neutral-800">
+            <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs text-neutral-500 font-medium">当前招新批次</p>
-                <p className="text-lg font-bold text-neutral-900 dark:text-neutral-100 truncate mt-0.5">
+                <p className="text-lg font-bold text-neutral-900 dark:text-neutral-100 truncate mt-1">
                   {activeBatch ? activeBatch.name : "暂未开启"}
                 </p>
               </div>
-              <Clock className="h-7 w-7 text-blue-500 opacity-80" />
+              <Clock className="h-7 w-7 text-blue-500 opacity-80 shrink-0" />
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm">
-            <CardContent className="p-4 flex items-center justify-between">
+          <Card className="shadow-sm border-neutral-200 dark:border-neutral-800">
+            <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs text-neutral-500 font-medium">开放报名部门</p>
-                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-0.5">
+                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-1">
                   {departmentCount} <span className="text-xs font-normal text-neutral-500">个</span>
                 </p>
               </div>
-              <Users className="h-7 w-7 text-emerald-500 opacity-80" />
+              <Users className="h-7 w-7 text-emerald-500 opacity-80 shrink-0" />
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm">
-            <CardContent className="p-4 flex items-center justify-between">
+          <Card className="shadow-sm border-neutral-200 dark:border-neutral-800">
+            <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs text-neutral-500 font-medium">已提交报名申请</p>
-                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-0.5">
+                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-1">
                   {applicantCount} <span className="text-xs font-normal text-neutral-500">人</span>
                 </p>
               </div>
-              <CheckCircle2 className="h-7 w-7 text-purple-500 opacity-80" />
+              <CheckCircle2 className="h-7 w-7 text-purple-500 opacity-80 shrink-0" />
             </CardContent>
           </Card>
 
-          <Card className="shadow-sm">
-            <CardContent className="p-4 flex items-center justify-between">
+          <Card className="shadow-sm border-neutral-200 dark:border-neutral-800">
+            <CardContent className="p-5 flex items-center justify-between">
               <div>
                 <p className="text-xs text-neutral-500 font-medium">待接单义诊工单</p>
-                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-0.5">
+                <p className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mt-1">
                   {openTicketCount} <span className="text-xs font-normal text-neutral-500">单</span>
                 </p>
               </div>
-              <Zap className="h-7 w-7 text-amber-500 opacity-80" />
+              <Zap className="h-7 w-7 text-amber-500 opacity-80 shrink-0" />
             </CardContent>
           </Card>
         </div>
